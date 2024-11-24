@@ -13,8 +13,8 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
-import { Route as AuthSignUpImport } from './routes/auth/sign-up'
-import { Route as AuthSignInImport } from './routes/auth/sign-in'
+import { Route as authSignUpImport } from './routes/(auth)/sign-up'
+import { Route as authSignInImport } from './routes/(auth)/sign-in'
 
 // Create/Update Routes
 
@@ -30,15 +30,15 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthSignUpRoute = AuthSignUpImport.update({
-  id: '/auth/sign-up',
-  path: '/auth/sign-up',
+const authSignUpRoute = authSignUpImport.update({
+  id: '/(auth)/sign-up',
+  path: '/sign-up',
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthSignInRoute = AuthSignInImport.update({
-  id: '/auth/sign-in',
-  path: '/auth/sign-in',
+const authSignInRoute = authSignInImport.update({
+  id: '/(auth)/sign-in',
+  path: '/sign-in',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,18 +60,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
-    '/auth/sign-in': {
-      id: '/auth/sign-in'
-      path: '/auth/sign-in'
-      fullPath: '/auth/sign-in'
-      preLoaderRoute: typeof AuthSignInImport
+    '/(auth)/sign-in': {
+      id: '/(auth)/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof authSignInImport
       parentRoute: typeof rootRoute
     }
-    '/auth/sign-up': {
-      id: '/auth/sign-up'
-      path: '/auth/sign-up'
-      fullPath: '/auth/sign-up'
-      preLoaderRoute: typeof AuthSignUpImport
+    '/(auth)/sign-up': {
+      id: '/(auth)/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof authSignUpImport
       parentRoute: typeof rootRoute
     }
   }
@@ -82,46 +82,46 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/auth/sign-in': typeof AuthSignInRoute
-  '/auth/sign-up': typeof AuthSignUpRoute
+  '/sign-in': typeof authSignInRoute
+  '/sign-up': typeof authSignUpRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/auth/sign-in': typeof AuthSignInRoute
-  '/auth/sign-up': typeof AuthSignUpRoute
+  '/sign-in': typeof authSignInRoute
+  '/sign-up': typeof authSignUpRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/auth/sign-in': typeof AuthSignInRoute
-  '/auth/sign-up': typeof AuthSignUpRoute
+  '/(auth)/sign-in': typeof authSignInRoute
+  '/(auth)/sign-up': typeof authSignUpRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/auth/sign-in' | '/auth/sign-up'
+  fullPaths: '/' | '/about' | '/sign-in' | '/sign-up'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/auth/sign-in' | '/auth/sign-up'
-  id: '__root__' | '/' | '/about' | '/auth/sign-in' | '/auth/sign-up'
+  to: '/' | '/about' | '/sign-in' | '/sign-up'
+  id: '__root__' | '/' | '/about' | '/(auth)/sign-in' | '/(auth)/sign-up'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  AuthSignInRoute: typeof AuthSignInRoute
-  AuthSignUpRoute: typeof AuthSignUpRoute
+  authSignInRoute: typeof authSignInRoute
+  authSignUpRoute: typeof authSignUpRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  AuthSignInRoute: AuthSignInRoute,
-  AuthSignUpRoute: AuthSignUpRoute,
+  authSignInRoute: authSignInRoute,
+  authSignUpRoute: authSignUpRoute,
 }
 
 export const routeTree = rootRoute
@@ -136,8 +136,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
-        "/auth/sign-in",
-        "/auth/sign-up"
+        "/(auth)/sign-in",
+        "/(auth)/sign-up"
       ]
     },
     "/": {
@@ -146,11 +146,11 @@ export const routeTree = rootRoute
     "/about": {
       "filePath": "about.tsx"
     },
-    "/auth/sign-in": {
-      "filePath": "auth/sign-in.tsx"
+    "/(auth)/sign-in": {
+      "filePath": "(auth)/sign-in.tsx"
     },
-    "/auth/sign-up": {
-      "filePath": "auth/sign-up.tsx"
+    "/(auth)/sign-up": {
+      "filePath": "(auth)/sign-up.tsx"
     }
   }
 }
