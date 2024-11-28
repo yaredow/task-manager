@@ -6,6 +6,8 @@ import { Toaster } from "@/components/ui/toaster";
 
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,7 +28,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(inter.className, "antialiased min-h-screen")}>
         <QueryProvider>
-          {children}
+          <SidebarProvider>
+            <AppSidebar />
+            <main>{children}</main>
+          </SidebarProvider>
           <Toaster />
         </QueryProvider>
       </body>
