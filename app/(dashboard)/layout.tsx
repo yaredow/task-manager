@@ -1,3 +1,4 @@
+import CreateProjectModal from "@/features/projects/components/create-project-modal";
 import { ReactNode } from "react";
 
 type DashboardLayoutProps = {
@@ -7,6 +8,7 @@ type DashboardLayoutProps = {
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <div className="flex w-full h-full">
+      <CreateProjectModal />
       <div className="fixed left-0 hidden top-0 lg:block lg:w-[264px] h-full overflow-y-auto">
         Sidebar
       </div>

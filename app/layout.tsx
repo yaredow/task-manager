@@ -1,13 +1,15 @@
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 
+import { cn } from "@/lib/utils";
+
 import QueryProvider from "@/components/providers/query-provider";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 import { Toaster } from "@/components/ui/toaster";
 
 import "./globals.css";
-import { cn } from "@/lib/utils";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,10 +30,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(inter.className, "antialiased min-h-screen")}>
         <QueryProvider>
-          <SidebarProvider>
-            <AppSidebar />
-            <main>{children}</main>
-          </SidebarProvider>
+          <NuqsAdapter>
+            <SidebarProvider>
+              <AppSidebar />
+              <main>{children}</main>
+            </SidebarProvider>
+          </NuqsAdapter>
           <Toaster />
         </QueryProvider>
       </body>
