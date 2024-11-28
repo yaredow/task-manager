@@ -1,6 +1,11 @@
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
+
+import QueryProvider from "@/components/providers/query-provider";
+import { Toaster } from "@/components/ui/toaster";
+
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,7 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`%=${inter.className} antialiased`}>{children}</body>
+      <body className={cn(inter.className, "antialiased min-h-screen")}>
+        <QueryProvider>
+          {children}
+          <Toaster />
+        </QueryProvider>
+      </body>
     </html>
   );
 }
