@@ -1,3 +1,9 @@
+"use client";
+
+import { useGetProject } from "@/features/projects/api/use-get-projects";
+
 export default function ProjectPage() {
-  return <main>Project page</main>;
+  const { projects, isLoading } = useGetProject();
+
+  return <main>{JSON.stringify(projects)}</main>;
 }

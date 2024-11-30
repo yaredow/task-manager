@@ -32,7 +32,6 @@ export default function CreateProjectForm({
   onCancel,
 }: CreateWorkspaceFormProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
   const isPending = false;
 
   const form = useForm<CreateProjectData>({
