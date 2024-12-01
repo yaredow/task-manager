@@ -8,6 +8,7 @@ export const useSignIn = () => {
     mutationKey: ["loginUser"],
     mutationFn: async (values: SignInData) => {
       const data = await kyInstance.post(`${backendUrl}/api/v1/auth/login/`, {
+        credentials: "include",
         json: values,
       });
 
