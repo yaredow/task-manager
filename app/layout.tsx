@@ -5,8 +5,6 @@ import type { Metadata } from "next";
 import { cn } from "@/lib/utils";
 
 import QueryProvider from "@/components/providers/query-provider";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
 import { Toaster } from "@/components/ui/toaster";
 
 import "./globals.css";
@@ -31,10 +29,7 @@ export default function RootLayout({
       <body className={cn(inter.className, "antialiased min-h-screen")}>
         <QueryProvider>
           <NuqsAdapter>
-            <SidebarProvider>
-              <AppSidebar />
-              <main>{children}</main>
-            </SidebarProvider>
+            <main>{children}</main>
           </NuqsAdapter>
           <Toaster />
         </QueryProvider>

@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/form";
 
 import { CreateProjectData, CreateProjectSchema } from "../schemas";
+import { useCreateProject } from "../api/use-create-project";
 
 type CreateWorkspaceFormProps = {
   onCancel?: () => void;
@@ -32,7 +33,8 @@ export default function CreateProjectForm({
   onCancel,
 }: CreateWorkspaceFormProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const isPending = false;
+  const { createProject, isPending } = useCreateProject();
+  const router = useRouter();
 
   const form = useForm<CreateProjectData>({
     resolver: zodResolver(CreateProjectSchema.omit({ workspaceId: true })),
@@ -42,7 +44,12 @@ export default function CreateProjectForm({
   });
 
   const onSubmit = (data: CreateProjectData) => {
-    console.log(data);
+    createProject(data, {
+      onSuccess: (data) => {
+        form.reset();
+        router.push(`projects/${data.id}`);
+      },
+    });
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {

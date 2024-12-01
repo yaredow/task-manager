@@ -7,7 +7,9 @@ export const useGetProject = () => {
   const { data: projects, isLoading } = useQuery({
     queryKey: ["projects"],
     queryFn: async () => {
-      const data = kyInstance.get(`${backendUrl}/api/v1/projects/`).json();
+      const data = await kyInstance
+        .get(`${backendUrl}/api/v1/projects/`)
+        .json();
 
       return data;
     },

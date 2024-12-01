@@ -1,3 +1,5 @@
+import SignInForm from "@/features/auth/components/sign-in-form";
+
 export default function SignInPage() {
-  return <main>Sign in page</main>;
+  return <SignInForm />;
 }
