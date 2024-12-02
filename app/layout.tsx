@@ -8,6 +8,7 @@ import QueryProvider from "@/components/providers/query-provider";
 import { Toaster } from "@/components/ui/toaster";
 
 import "./globals.css";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,12 +28,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(inter.className, "antialiased min-h-screen")}>
-        <QueryProvider>
-          <NuqsAdapter>
-            <main>{children}</main>
-          </NuqsAdapter>
-          <Toaster />
-        </QueryProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <QueryProvider>
+            <NuqsAdapter>
+              <main>{children}</main>
+            </NuqsAdapter>
+            <Toaster />
+          </QueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

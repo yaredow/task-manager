@@ -41,11 +41,7 @@ export default function SignInForm() {
   });
 
   const onSubmit = (values: SignInData) => {
-    signin(values, {
-      onSuccess: () => {
-        router.push("/");
-      },
-    });
+    signin(values);
   };
 
   return (

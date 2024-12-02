@@ -1,35 +1,34 @@
 "use client";
 
+import { Check, LogOutIcon, Monitor, Moon, Sun, UserIcon } from "lucide-react";
+import { useTheme } from "next-themes";
+import useUserStore from "../store/user-store";
+import { useLogOut } from "../api/use-log-out";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSubContent,
   DropdownMenuTrigger,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Loader2, LogOut } from "lucide-react";
-import DottedSeparator from "@/components/dotted-separator";
-import { useGetCurrentUser } from "../api/use-get-current-user";
 
 export default function UserButton() {
-  const { currentUser, isPending } = useGetCurrentUser();
-  console.log({ currentUser });
+  const user = useUserStore((state) => state.user);
+  const { logout, isPending } = useLogOut();
+  const { theme, setTheme } = useTheme();
 
-  if (isPending) {
-    return (
-      <div className="size-10 rounded-full flex items-center justify-center bg-neutral-200 border border-neutral-200 ">
-        <Loader2 className="animate-spin size-4 text-muted-foreground" />
-      </div>
-    );
-  }
+  const { email, name } = user;
 
-  if (!currentUser) {
-    return null;
-  }
-
-  const avatarFallback = currentUser?.name
+  const avatarFallback = name
     ? name.charAt(0).toUpperCase()
-    : (email.charAt(0).toUpperCase() ?? "U");
+    : (email?.charAt(0).toUpperCase() ?? "U");
 
   return (
     <DropdownMenu modal={false}>
@@ -40,31 +39,44 @@ export default function UserButton() {
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        side="bottom"
-        className="w-60"
-        sideOffset={10}
-      >
-        <div className=" flex flex-col items-center justify-center gap-2 px-2.5 py-4">
-          <Avatar className="size-[52px] rounded-full  transition border border-neutral-300">
-            <AvatarFallback className="bg-neutral-200 font-medium text-xl text-neutral-500 flex items-center justify-center">
-              {avatarFallback}
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex flex-col items-center justify-center">
-            <p className="text-sm font-medium text-neutral-900">{name}</p>
-            <p className="text-xs text-neutral-500">{email}</p>
-          </div>
-        </div>
-        <DottedSeparator className="mb-1" />
+      <DropdownMenuContent className="mr-2">
+        <DropdownMenuLabel>Logged in as {user.name}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger className="flex flex-row items-center gap-2">
+            <Monitor className="mr-2 size-4" /> Theme
+          </DropdownMenuSubTrigger>
+          <DropdownMenuPortal>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem onClick={() => "system"}>
+                <Monitor className="mr-2 size-4" />
+                System default
+                {theme === "system" && <Check className="ms-2 size-4" />}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("light")}>
+                <Sun className="mr-2 size-4" />
+                Light
+                {theme === "light" && <Check className="ms-2 size-4" />}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("dark")}>
+                <Moon className="mr-2 size-4" />
+                Dark
+                {theme === "dark" && <Check className="ms-2 size-4" />}
+              </DropdownMenuItem>{" "}
+            </DropdownMenuSubContent>
+          </DropdownMenuPortal>
+        </DropdownMenuSub>
+        <DropdownMenuSeparator />
         <DropdownMenuItem
-          onClick={() => logout()}
-          className="h-10 flex items-center justify-center text-amber-700"
+          disabled={isPending}
+          onClick={() => {
+            logout();
+          }}
         >
-          <LogOut className="size-4 mr-2" /> Logout
+          <LogOutIcon className="mr-2 size-4" />
+          Logout
         </DropdownMenuItem>
-      </DropdownMenuContent>
+      </DropdownMenuContent>{" "}
     </DropdownMenu>
   );
 }
