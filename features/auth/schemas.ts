@@ -20,3 +20,7 @@ export const SignUpSchema = z
   });
 
 export type SignUpData = z.infer<typeof SignUpSchema>;
+
+export const ResetPasswordSchema = z.object({
+  email: z.string().email(),
+});
