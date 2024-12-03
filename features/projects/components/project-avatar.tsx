@@ -1,43 +1,33 @@
-import React from "react";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-interface ProjectAvatarProps {
+type ProjectSwitcherProps = {
+  image?: string;
   name: string;
-  imageUrl?: string;
-  size?: "sm" | "md" | "lg";
-}
+  className?: string;
+};
 
-export function ProjectAvatar({
+export default function ProjectAvatar({
+  image,
   name,
-  imageUrl,
-  size = "md",
-}: ProjectAvatarProps) {
-  const firstLetter = name.charAt(0).toUpperCase();
-
-  const sizeClasses = {
-    sm: "w-6 h-6 text-xs",
-    md: "w-12 h-12 text-sm",
-    lg: "w-16 h-16 text-base",
-  };
-
-  const avatarSize = sizeClasses[size];
+  className,
+}: ProjectSwitcherProps) {
+  if (image) {
+    return (
+      <div
+        className={cn("size-10 relative rounded-md overflow-hidden", className)}
+      >
+        <Image src={image} alt="name" className="object-cover" fill />
+      </div>
+    );
+  }
 
   return (
-    <div
-      className={`${avatarSize} rounded-full overflow-hidden bg-gradient-to-br from-purple-500 to-pink-500 text-white font-semibold flex-shrink-0`}
-      aria-hidden="true"
-    >
-      {imageUrl ? (
-        <Image
-          src={imageUrl}
-          alt=""
-          width={64}
-          height={64}
-          className="w-full h-full object-cover"
-        />
-      ) : (
-        firstLetter
-      )}
-    </div>
+    <Avatar className={cn("size-10 rounded-md", className)}>
+      <AvatarFallback className="text-white bg-blue-600 font-semibold text-lg uppercase rounded-md">
+        {name[0]}
+      </AvatarFallback>
+    </Avatar>
   );
 }

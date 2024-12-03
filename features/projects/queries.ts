@@ -18,3 +18,18 @@ export const getProjects = async () => {
     return null;
   }
 };
+
+export const getProject = async (projectId: string) => {
+  try {
+    const project = await kyInstance
+      .get(`${backendUrl}/api/v1/projects/${projectId}`)
+      .json<Project>();
+
+    if (!project) return null;
+
+    return project;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};

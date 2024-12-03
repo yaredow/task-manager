@@ -31,12 +31,12 @@ export default function Projects() {
           <Link href={href} key={project.id}>
             <div
               className={cn(
-                "flex items-center gap-2.5 p-2.5 rounded-md hover:opacity-75 transition cursor-pointer text-neutral-500",
+                "flex items-center gap-y-2.5 gap-x-4 p-2.5 rounded-md hover:opacity-75 transition cursor-pointer text-neutral-500",
                 isActive && "bg-white shadow-sm hover:opacity-100 text-primary",
               )}
             >
               <ProjectAvatar name={project.name} size="sm" />
-              <span className="truncate">{project.name}</span>
+              <span className="truncate text-sm">{project.name}</span>
             </div>
           </Link>
         );
