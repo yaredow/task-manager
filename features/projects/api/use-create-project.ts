@@ -4,7 +4,7 @@ import { backendUrl } from "@/lib/constants";
 import kyInstance from "@/lib/ky";
 
 import { CreateProjectData } from "../schemas";
-import { CreateProjectResponseType } from "../types";
+import { Project } from "../types";
 
 export const useCreateProject = () => {
   const { mutate: createProject, isPending } = useMutation({
@@ -19,7 +19,7 @@ export const useCreateProject = () => {
         .post(`${backendUrl}/api/v1/projects/new/`, {
           body: formdata,
         })
-        .json<CreateProjectResponseType>();
+        .json<Project>();
 
       return data;
     },

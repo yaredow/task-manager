@@ -18,6 +18,7 @@ import Image from "next/image";
 import DottedSeparator from "./dotted-separator";
 import { useCreateProjectModal } from "@/features/projects/hooks/use-create-project-modal";
 import Projects from "./projects";
+import { useGetProjects } from "@/features/projects/api/use-get-projects";
 
 // Menu items.
 const items = [
@@ -41,6 +42,7 @@ const items = [
 
 export function AppSidebar() {
   const { open } = useCreateProjectModal();
+  const { projects } = useGetProjects();
 
   return (
     <Sidebar>
@@ -83,13 +85,7 @@ export function AppSidebar() {
         </SidebarGroup>
         <DottedSeparator />
         <SidebarGroup>
-          <div className="flex items-center justify-between">
-            <SidebarGroupLabel>Projects</SidebarGroupLabel>
-            <Projects />
-          </div>
-          <SidebarGroupContent>
-            <SidebarMenu>AI book reader</SidebarMenu>
-          </SidebarGroupContent>
+          <Projects />
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
