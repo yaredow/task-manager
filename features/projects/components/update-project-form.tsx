@@ -9,11 +9,13 @@ import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
 
+import { useConfirm } from "@/hooks/use-confirm";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import DottedSeparator from "@/components/dotted-separator";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -23,35 +25,35 @@ import {
 } from "@/components/ui/form";
 
 import { UpdateProjectData, UpdateProjectSchema } from "../schemas";
+import { useDeleteProject } from "../api/use-delete-project";
+import { useUpdateProject } from "../api/use-update-project";
+import { useProjectId } from "../hooks/use-project-id";
 import { Project } from "../types";
 
-type CreateWorkspaceFormProps = {
+type UpdateProjectFormProps = {
   onCancel?: () => void;
-  initialValues: Project;
+  initialValues: Project | null;
 };
 
-export default function UpdateWorkspaceForm({
+export default function UpdateProjectForm({
   onCancel,
   initialValues,
-}: CreateWorkspaceFormProps) {
-  const { isPending: isProjectUpdatePending, updateProject } =
-    useUpdateProject();
+}: UpdateProjectFormProps) {
+  const projectId = useProjectId();
+  const { isPending: isProjectUpdatePending, updateProject } = useUpdateProject(
+    { projectId },
+  );
 
-  const { isPending: isProjectDeletePending, deleteProject } =
-    useDeleteProject();
+  const { isPending: isProjectDeletePending, deleteProject } = useDeleteProject(
+    { projectId },
+  );
 
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   const [ConfirmationDialog, confirm] = useConfirm({
-    title: "Delete workspace",
-    message: "Are you sure you want to delete this workspace?",
-    variant: "destructive",
-  });
-
-  const [ResetDialog, confirmReset] = useConfirm({
-    title: "Reset invite code",
-    message: "This will invalidate the current invite code",
+    title: "Delete project",
+    message: "Are you sure you want to delete this project?",
     variant: "destructive",
   });
 
@@ -59,45 +61,18 @@ export default function UpdateWorkspaceForm({
     resolver: zodResolver(UpdateProjectSchema),
     defaultValues: {
       ...initialValues,
-      image: initialValues.imageUrl || undefined,
     },
   });
 
-  const onSubmit = (data: UpdateProjectData) => {
-    const finalValue = {
-      ...data,
-      image: data.image instanceof File ? data.image : "",
-    };
-    updateProject(
-      {
-        form: finalValue,
-        param: { projectId: initialValues.$id },
-      },
-      {
-        onSuccess: ({ data }) => {
-          form.reset();
-          router.push(`/workspaces/${data.$id}`);
-        },
-      },
-    );
+  const onSubmit = (values: UpdateProjectData) => {
+    updateProject(values);
   };
 
   const handleConfirm = async () => {
     const ok = await confirm();
 
     if (ok) {
-      deleteProject(
-        {
-          param: {
-            projectId: initialValues.$id,
-          },
-        },
-        {
-          onSuccess: () => {
-            window.location.href = "/";
-          },
-        },
-      );
+      deleteProject();
     }
   };
 
@@ -111,7 +86,6 @@ export default function UpdateWorkspaceForm({
   return (
     <div className="flex flex-col gap-y-4">
       <ConfirmationDialog />
-      <ResetDialog />
       <Card className="w-full h-full border-none shadow-none">
         <CardHeader className="flex flex-row items-center space-x-4 space-y-0  p-7">
           <Button
@@ -121,10 +95,7 @@ export default function UpdateWorkspaceForm({
             onClick={
               onCancel
                 ? onCancel
-                : () =>
-                    router.push(
-                      `/workspaces/${initialValues.workspaceId}/projects/${initialValues.$id}`,
-                    )
+                : () => router.push(`/projects/${initialValues?.id}`)
             }
           >
             <ArrowLeftIcon className="size-4" />
@@ -254,7 +225,7 @@ export default function UpdateWorkspaceForm({
           <div className="flex flex-col">
             <h3 className="text-destructive font-bold">Danger Zone</h3>
             <p className="text-sm text-muted-foreground">
-              Deleting a workspace is an irreversable proccess and will remove
+              Deleting a project is an irreversable proccess and will remove
               associated data
             </p>
             <DottedSeparator className="py-7" />
@@ -265,7 +236,7 @@ export default function UpdateWorkspaceForm({
               disabled={isProjectUpdatePending || isProjectDeletePending}
               onClick={handleConfirm}
             >
-              Delete workspace
+              Delete project
             </Button>
           </div>
         </CardContent>

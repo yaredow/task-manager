@@ -3,19 +3,21 @@ import { useMutation } from "@tanstack/react-query";
 import { backendUrl } from "@/lib/constants";
 import kyInstance from "@/lib/ky";
 
-import { CreateProjectData } from "../schemas";
+import { UpdateProjectData } from "../schemas";
 import { Project } from "../types";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 
+type UseCreateProjectProps = {
+  projectId: string;
+};
 
-
-export const useCreateProject = () => {
+export const useUpdateProject = ({ projectId }: UseCreateProjectProps) => {
   const router = useRouter();
-  const { mutate: createProject, isPending } = useMutation<
+  const { mutate: updateProject, isPending } = useMutation<
     Project,
     Error,
-    CreateProjectData
+    UpdateProjectData
   >({
     mutationKey: ["project"],
     mutationFn: async (projectData) => {
@@ -27,7 +29,7 @@ export const useCreateProject = () => {
       }
 
       const data = await kyInstance
-        .put(`${backendUrl}/api/v1/projects/${}/`, {
+        .put(`${backendUrl}/api/v1/projects/${projectId}/`, {
           credentials: "include",
           body: formdata,
         })
@@ -37,10 +39,16 @@ export const useCreateProject = () => {
     },
     onSuccess: (data) => {
       toast({
-        description: "Project created successfully",
+        description: "Project updated successfully",
       });
       router.push(`/projects/${data.id}`);
     },
+    onError: () => {
+      toast({
+        variant: "destructive",
+        description: "Something happened while updating the project",
+      });
+    },
   });
-  return { createProject, isPending };
+  return { updateProject, isPending };
 };

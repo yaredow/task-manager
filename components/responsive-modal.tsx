@@ -1,8 +1,12 @@
 import { type ReactElement } from "react";
 import { useMedia } from "react-use";
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
-import { DialogTitle } from "@radix-ui/react-dialog";
 
 type ResponsiveModalProps = {
   children: React.ReactNode;
