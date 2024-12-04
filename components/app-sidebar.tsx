@@ -1,6 +1,8 @@
 "use client";
 
 import { BookCheckIcon, Home, Settings } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 import {
   Sidebar,
@@ -13,14 +15,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import Link from "next/link";
-import Image from "next/image";
-import DottedSeparator from "./dotted-separator";
-import { useCreateProjectModal } from "@/features/projects/hooks/use-create-project-modal";
-import Projects from "./projects";
-import { useGetProjects } from "@/features/projects/api/use-get-projects";
 
-// Menu items.
+import DottedSeparator from "./dotted-separator";
+import Projects from "./projects";
+
 const items = [
   {
     title: "Home",
@@ -41,9 +39,6 @@ const items = [
 ];
 
 export function AppSidebar() {
-  const { open } = useCreateProjectModal();
-  const { projects } = useGetProjects();
-
   return (
     <Sidebar>
       <SidebarHeader>

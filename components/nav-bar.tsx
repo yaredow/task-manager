@@ -3,7 +3,7 @@ import MobileNavbar from "./mobile-navbar";
 
 export default function Navbar() {
   return (
-    <nav className="lg:pl-[240px] pt-4 flex px-6 items-center justify-between">
+    <nav className="lg:pl-[220px] pt-4 flex px-6 items-center justify-between">
       <div className="flex-col hidden lg:flex">
         <h1 className="text-2xl font-semibold">Home</h1>
         <p className="text-muted-foreground">
