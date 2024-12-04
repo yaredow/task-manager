@@ -4,12 +4,14 @@ import { backendUrl } from "@/lib/constants";
 import kyInstance from "@/lib/ky";
 
 import { toast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 type UseDeleteProjectProps = {
   projectId: string;
 };
 
 export const useDeleteProject = ({ projectId }: UseDeleteProjectProps) => {
+  const router = useRouter();
   const querClient = useQueryClient();
 
   const { mutate: deleteProject, isPending } = useMutation({
@@ -30,7 +32,7 @@ export const useDeleteProject = ({ projectId }: UseDeleteProjectProps) => {
       });
       querClient.invalidateQueries({ queryKey: ["projects"] });
       querClient.invalidateQueries({ queryKey: ["project", projectId] });
-      window.location.href = "/";
+      router.push("/");
     },
   });
   return { deleteProject, isPending };
