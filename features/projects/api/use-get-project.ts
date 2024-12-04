@@ -12,7 +12,7 @@ export const useGetProject = ({ projectId }: UseGetProjectProps) => {
     queryKey: ["project", projectId],
     queryFn: async () => {
       const data = await kyInstance
-        .delete(`${backendUrl}/api/v1/projects/${projectId}/`, {
+        .get(`${backendUrl}/api/v1/projects/${projectId}/`, {
           credentials: "include",
         })
         .json<Project>();

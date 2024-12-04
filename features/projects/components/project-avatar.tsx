@@ -12,7 +12,7 @@ export function ProjectAvatar({
   imageUrl,
   size = "md",
 }: ProjectAvatarProps) {
-  const firstLetter = name.charAt(0).toUpperCase();
+  const firstLetter = name ? name.charAt(0).toUpperCase() : "";
 
   const sizeClasses = {
     sm: "w-6 h-6 text-xs",

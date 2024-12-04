@@ -1,6 +1,5 @@
 "use client";
 
-import { RiAddCircleFill } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 
 import {
@@ -30,11 +29,11 @@ export default function ProjectSwitcher() {
           <SelectValue placeholder="No workspace selected" />
         </SelectTrigger>
         <SelectContent>
-          {projects?.map((workspace) => (
-            <SelectItem key={workspace.id} value={workspace.id}>
+          {projects?.map((project) => (
+            <SelectItem key={project.id} value={project.id}>
               <div className="flex justify-start items-center gap-3 font-medium">
-                <ProjectAvatar name={workspace.name} size="sm" />
-                <p className="text-sm">{workspace.name}</p>
+                <ProjectAvatar name={project.name} size="sm" />
+                <p className="text-sm">{project.name}</p>
               </div>
             </SelectItem>
           ))}

@@ -7,9 +7,6 @@ import DottedSeparator from "@/components/dotted-separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
-import { CreateTaskData, CreateTaskSchema } from "../schemas";
-import { useCreateTask } from "../api/use-create-task";
 import DatePicker from "@/components/date-picker";
 import {
   Form,
@@ -26,41 +23,34 @@ import {
   SelectContent,
   SelectTrigger,
 } from "@/components/ui/select";
-import MemberAvatar from "@/features/members/components/member-avatar";
+
+import { CreateTaskData, CreateTaskSchema } from "../schemas";
 import { TaskStatus } from "../types";
-import ProjectAvatar from "@/features/projects/components/workspace-avatar";
+import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 
 type CreateTaskFormProps = {
   onCancel?: () => void;
-  projectOptions: { id: string; name: string; imageUrl: string }[];
-  memberOptions: { id: string; name: string }[];
+  projectOptions: { id: string; name: string }[];
 };
 
 export default function CreateTaskForm({
   onCancel,
   projectOptions,
-  memberOptions,
 }: CreateTaskFormProps) {
-  const { isPending, createTask } = useCreateTask();
-  const workspaceId = useWorkspaceId();
-
+  const isPending = false;
   const form = useForm<CreateTaskData>({
     resolver: zodResolver(CreateTaskSchema),
     defaultValues: {
-      workspaceId,
+      name: "",
+      status: "TODO",
+      description: "",
+      due_date: null,
+      priority: 0,
     },
   });
 
   const onSubmit = (values: CreateTaskData) => {
-    createTask(
-      { json: { ...values, workspaceId } },
-      {
-        onSuccess: () => {
-          form.reset();
-          onCancel?.();
-        },
-      },
-    );
+    console.log(values);
   };
 
   return (
@@ -113,41 +103,6 @@ export default function CreateTaskForm({
 
               <FormField
                 control={form.control}
-                name="assigneeId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Assignee</FormLabel>
-                    <Select
-                      defaultValue={field.value}
-                      onValueChange={field.onChange}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select assignee" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <FormMessage />
-                      <SelectContent>
-                        {memberOptions.map((member) => (
-                          <SelectItem value={member.id} key={member.id}>
-                            <div className="flex items-center gap-x-2">
-                              <MemberAvatar
-                                name={member.name}
-                                className="size-6"
-                              />
-                              {member.name}
-                            </div>
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
                 name="status"
                 render={({ field }) => (
                   <FormItem>
@@ -183,6 +138,34 @@ export default function CreateTaskForm({
 
               <FormField
                 control={form.control}
+                name="priority"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Priority</FormLabel>
+                    <Select
+                      defaultValue={String(field.value)}
+                      onValueChange={(value) => field.onChange(Number(value))}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select priority" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {Array.from({ length: 11 }, (_, i) => (
+                          <SelectItem key={i} value={String(i)}>
+                            {i}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
                 name="projectId"
                 render={({ field }) => (
                   <FormItem>
@@ -201,11 +184,7 @@ export default function CreateTaskForm({
                         {projectOptions.map((project) => (
                           <SelectItem value={project.id} key={project.id}>
                             <div className="flex items-center gap-x-2">
-                              <ProjectAvatar
-                                name={project.name}
-                                className="size-6"
-                                image={project.imageUrl}
-                              />
+                              <ProjectAvatar name={project.name} />
                               {project.name}
                             </div>
                           </SelectItem>
@@ -242,4 +221,3 @@ export default function CreateTaskForm({
     </Card>
   );
 }
-se;

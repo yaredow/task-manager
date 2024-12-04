@@ -1,28 +1,22 @@
 import { z } from "zod";
+import { TaskStatus } from "./types";
 
-export const TaskStatus = z.enum([
-  "BACKLOG",
-  "TODO",
-  "IN_PROGRESS",
-  "IN_REVIEW",
-  "DONE",
-]);
-
-export const taskSchema = z.object({
-  id: z.string().optional(), // Optional for new tasks
-  status: TaskStatus.default("TODO"),
-  project: z.string().uuid(), // Ensure it's a valid UUID
+export const CreateTaskSchema = z.object({
+  status: TaskStatus.TODO,
+  project: z.string().cuid(),
   name: z
     .string()
     .min(1, "Task name is required")
     .max(100, "Task name is too long"),
   description: z.string().min(1, "Description is required"),
-  due_date: z.string().optional().nullable(), // Allow nullable for no due date
+  due_date: z.string().optional().nullable(),
   priority: z
     .number()
     .min(0, "Priority must be at least 0")
     .max(10, "Priority must be at most 10")
     .default(0),
-  created_at: z.string().optional(), // Populated by the backend
-  updated_at: z.string().optional(), // Populated by the backend
+  created_at: z.string().optional(),
+  updated_at: z.string().optional(),
 });
+
+export type CreateTaskData = z.infer<typeof CreateTaskSchema>;
