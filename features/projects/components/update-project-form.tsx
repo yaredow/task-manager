@@ -65,6 +65,7 @@ export default function UpdateProjectForm({
   });
 
   const onSubmit = (values: UpdateProjectData) => {
+    console.log("update button clicked");
     updateProject(values);
   };
 

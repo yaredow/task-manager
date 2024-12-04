@@ -32,6 +32,9 @@ export const useUpdateProject = ({ projectId }: UseCreateProjectProps) => {
         .put(`${backendUrl}/api/v1/projects/${projectId}/`, {
           credentials: "include",
           body: formdata,
+          headers: {
+            "Content-Type": "application/json",
+          },
         })
         .json<Project>();
 

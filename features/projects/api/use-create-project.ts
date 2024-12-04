@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { backendUrl } from "@/lib/constants";
 import kyInstance from "@/lib/ky";
@@ -10,6 +10,8 @@ import { toast } from "@/hooks/use-toast";
 
 export const useCreateProject = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
+
   const { mutate: createProject, isPending } = useMutation<
     Project,
     Error,
@@ -36,6 +38,7 @@ export const useCreateProject = () => {
       toast({
         description: "Project created successfully",
       });
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
       router.push(`/projects/${data.id}`);
     },
   });

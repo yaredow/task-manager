@@ -1,9 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { backendUrl } from "@/lib/constants";
 import kyInstance from "@/lib/ky";
 
-import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 
 type UseDeleteProjectProps = {
@@ -11,7 +10,7 @@ type UseDeleteProjectProps = {
 };
 
 export const useDeleteProject = ({ projectId }: UseDeleteProjectProps) => {
-  const router = useRouter();
+  const querClient = useQueryClient();
 
   const { mutate: deleteProject, isPending } = useMutation({
     mutationKey: ["project"],
@@ -29,7 +28,9 @@ export const useDeleteProject = ({ projectId }: UseDeleteProjectProps) => {
       toast({
         description: "Project deleted successfully",
       });
-      router.push("/");
+      querClient.invalidateQueries({ queryKey: ["projects"] });
+      querClient.invalidateQueries({ queryKey: ["project", projectId] });
+      window.location.href = "/";
     },
   });
   return { deleteProject, isPending };
