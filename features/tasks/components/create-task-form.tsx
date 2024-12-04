@@ -56,7 +56,7 @@ export default function CreateTaskForm({
   const onSubmit = (values: CreateTaskData) => {
     createTask(values, {
       onSuccess: () => {
-        onCancel();
+        onCancel && onCancel();
       },
     });
   };
