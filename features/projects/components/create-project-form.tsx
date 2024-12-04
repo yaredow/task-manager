@@ -35,8 +35,6 @@ export default function CreateProjectForm({
 }: CreateWorkspaceFormProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const { createProject, isPending } = useCreateProject();
-  const user = useUserStore((state) => state.user);
-  const router = useRouter();
 
   const form = useForm<CreateProjectData>({
     resolver: zodResolver(CreateProjectSchema),

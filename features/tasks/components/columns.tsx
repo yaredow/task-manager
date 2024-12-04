@@ -45,9 +45,7 @@ export const columns: ColumnDef<Task>[] = [
     },
     cell: ({ row }) => {
       const projectId = row.original.project;
-      console.log({ projectId });
       const { project } = useGetProject({ projectId });
-      console.log({ project });
 
       return (
         <div className="flex items-center gap-x-2 text-sm font-medium">

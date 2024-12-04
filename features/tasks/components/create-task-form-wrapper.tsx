@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { useGetProjects } from "@/features/projects/api/use-get-projects";
 import { Loader2 } from "lucide-react";

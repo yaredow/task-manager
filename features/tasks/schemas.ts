@@ -1,15 +1,23 @@
 import { z } from "zod";
 import { TaskStatus } from "./types";
 
+const TaskStatusSchema = z.enum([
+  TaskStatus.BACKLOG,
+  TaskStatus.TODO,
+  TaskStatus.IN_PROGRESS,
+  TaskStatus.IN_REVIEW,
+  TaskStatus.DONE,
+]);
+
 export const CreateTaskSchema = z.object({
-  status: TaskStatus.TODO,
+  status: TaskStatusSchema.default(TaskStatus.TODO),
   project: z.string().cuid(),
   name: z
     .string()
     .min(1, "Task name is required")
     .max(100, "Task name is too long"),
   description: z.string().min(1, "Description is required"),
-  due_date: z.string().optional().nullable(),
+  due_date: z.coerce.date(),
   priority: z
     .number()
     .min(0, "Priority must be at least 0")

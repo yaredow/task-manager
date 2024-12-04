@@ -1,13 +1,17 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import DottedSeparator from "@/components/dotted-separator";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ProjectAvatar } from "@/features/projects/components/project-avatar";
+import DottedSeparator from "@/components/dotted-separator";
+import { Textarea } from "@/components/ui/textarea";
 import DatePicker from "@/components/date-picker";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -26,7 +30,7 @@ import {
 
 import { CreateTaskData, CreateTaskSchema } from "../schemas";
 import { TaskStatus } from "../types";
-import { ProjectAvatar } from "@/features/projects/components/project-avatar";
+import { useCreateTask } from "../api/use-create-task";
 
 type CreateTaskFormProps = {
   onCancel?: () => void;
@@ -37,20 +41,24 @@ export default function CreateTaskForm({
   onCancel,
   projectOptions,
 }: CreateTaskFormProps) {
-  const isPending = false;
+  const { isPending, createTask } = useCreateTask();
   const form = useForm<CreateTaskData>({
     resolver: zodResolver(CreateTaskSchema),
     defaultValues: {
       name: "",
-      status: "TODO",
+      status: TaskStatus.TODO,
       description: "",
-      due_date: null,
+      due_date: undefined,
       priority: 0,
     },
   });
 
   const onSubmit = (values: CreateTaskData) => {
-    console.log(values);
+    createTask(values, {
+      onSuccess: () => {
+        onCancel();
+      },
+    });
   };
 
   return (
@@ -89,12 +97,29 @@ export default function CreateTaskForm({
 
               <FormField
                 control={form.control}
-                name="dueDate"
+                name="due_date"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Due Date</FormLabel>
                     <FormControl>
                       <DatePicker {...field} placeholder="Select due date" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Enter a detailed task description"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -166,7 +191,7 @@ export default function CreateTaskForm({
 
               <FormField
                 control={form.control}
-                name="projectId"
+                name="project"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Project</FormLabel>
