@@ -29,7 +29,7 @@ export const useSignIn = () => {
     },
     onSuccess: (data) => {
       router.push("/");
-      setUser({ ...data.user, id: data.user.pk });
+      setUser({ ...data.user, id: data.user.id });
     },
     onError: () => {
       toast({

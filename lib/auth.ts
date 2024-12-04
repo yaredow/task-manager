@@ -19,7 +19,6 @@ export const validateAuth = async () => {
       body: JSON.stringify({ token }),
     });
 
-    console.log(response.status);
     if (response.status === 200) {
       return { isAuthenticated: true };
     }

@@ -1,16 +1,17 @@
 "use client";
 
-import { useGetProjects } from "@/features/projects/api/use-get-projects";
-import { ProjectAvatar } from "@/features/projects/components/project-avatar";
-import { useCreateProjectModal } from "@/features/projects/hooks/use-create-project-modal";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { RiAddCircleFill } from "react-icons/ri";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+
+import { useCreateProjectModal } from "@/features/projects/hooks/use-create-project-modal";
+import { ProjectAvatar } from "@/features/projects/components/project-avatar";
+import { useGetProjects } from "@/features/projects/api/use-get-projects";
+import { cn } from "@/lib/utils";
 
 export default function Projects() {
-  const pathName = usePathname();
   const { open } = useCreateProjectModal();
+  const pathName = usePathname();
   const { projects, isPending } = useGetProjects();
 
   return (
@@ -31,12 +32,12 @@ export default function Projects() {
           <Link href={href} key={project.id}>
             <div
               className={cn(
-                "flex items-center gap-y-2.5 gap-x-4 p-2.5 rounded-md hover:opacity-75 transition cursor-pointer text-neutral-500",
+                "flex items-center gap-2.5 p-2.5 rounded-md hover:opacity-75 transition cursor-pointer text-neutral-500",
                 isActive && "bg-white shadow-sm hover:opacity-100 text-primary",
               )}
             >
               <ProjectAvatar name={project.name} size="sm" />
-              <span className="truncate text-sm">{project.name}</span>
+              <span className="truncate">{project.name}</span>
             </div>
           </Link>
         );

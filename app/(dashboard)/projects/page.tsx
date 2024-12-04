@@ -1,4 +1,3 @@
-import { useGetProject } from "@/features/projects/api/use-get-projects";
 import { validateAuth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 

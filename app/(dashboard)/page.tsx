@@ -13,9 +13,8 @@ export default async function Home() {
   const project = await getProjects();
 
   if (project?.length === 0) {
-    redirect("/projects/create-project");
+    redirect("/projects/create");
   } else {
     redirect(`/projects/${project?.[0].id}`);
   }
-  return <div>Task App</div>;
 }

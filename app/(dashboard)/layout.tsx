@@ -12,11 +12,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <div className="flex w-full h-full">
       <CreateProjectModal />
-      <div className="fixed left-0 hidden top-0 lg:block lg:w-[264px] h-full overflow-y-auto"></div>
-      <div className="lg:pl-[264px] w-full">
+      <div className="w-full">
         <div className="mx-auto max-w-screen-2xl h-full">
           <Navbar />
-          <main className="h-full py-8 px-6 flex flex-col">
+          <main className="h-full py-8 px-2 flex flex-col">
             <SidebarProvider>
               <AppSidebar />
               {children}

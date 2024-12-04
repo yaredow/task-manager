@@ -2,8 +2,6 @@
 
 import { RiAddCircleFill } from "react-icons/ri";
 import { useRouter } from "next/navigation";
-import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
-import { useCreateWorkspaceModal } from "@/features/workspaces/hooks/use-create-workspace-modal";
 
 import {
   Select,
@@ -11,39 +9,32 @@ import {
   SelectTrigger,
   SelectItem,
   SelectValue,
-} from "../../../components/ui/select";
-import ProjectAvatar from "./project-avatar";
+} from "@/components/ui/select";
 import { useGetProjects } from "../api/use-get-projects";
+import { useProjectId } from "../hooks/use-project-id";
+import { ProjectAvatar } from "./project-avatar";
 
-export default function WorkspaceSwitcher() {
-  const { open } = useCreateWorkspaceModal();
-  const { isPending, projects } = useGetProjects();
-  const workspaceId = useWorkspaceId();
+export default function ProjectSwitcher() {
   const router = useRouter();
+  const projectId = useProjectId();
+  const { projects } = useGetProjects();
 
-  const onSelect = (workspaceId: string) => {
-    router.push(`/workspaces/${workspaceId}`);
+  const onSelect = (projectId: string) => {
+    router.push(`/projects/${projectId}`);
   };
 
   return (
     <div className="flex flex-col gap-y-2">
-      <div className="flex items-center justify-between">
-        <p className="text-xs uppercase text-neutral-500">Workspaces</p>
-        <RiAddCircleFill
-          onClick={open}
-          className="size-5 text-neutral-500 cursor-pointer hover:opacity-75 transition"
-        />
-      </div>
-      <Select onValueChange={onSelect} value={workspaceId}>
+      <Select onValueChange={onSelect} value={projectId}>
         <SelectTrigger className="w-full bg-neutral-200 font-medium p-1">
           <SelectValue placeholder="No workspace selected" />
         </SelectTrigger>
         <SelectContent>
-          {projects?.map((project) => (
-            <SelectItem key={project.id} value={project.id}>
+          {projects?.map((workspace) => (
+            <SelectItem key={workspace.id} value={workspace.id}>
               <div className="flex justify-start items-center gap-3 font-medium">
-                <ProjectAvatar name={project.name} />
-                <p className="text-sm">{project.name}</p>
+                <ProjectAvatar name={workspace.name} size="sm" />
+                <p className="text-sm">{workspace.name}</p>
               </div>
             </SelectItem>
           ))}

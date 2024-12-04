@@ -8,7 +8,6 @@ export const CreateProjectSchema = z.object({
       z.string().transform((value) => (value === "" ? undefined : value)),
     ])
     .optional(),
-  workspaceId: z.string(),
 });
 
 export type CreateProjectData = z.infer<typeof CreateProjectSchema>;

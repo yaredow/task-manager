@@ -24,6 +24,7 @@ import {
 
 import { CreateProjectData, CreateProjectSchema } from "../schemas";
 import { useCreateProject } from "../api/use-create-project";
+import useUserStore from "@/features/auth/store/user-store";
 
 type CreateWorkspaceFormProps = {
   onCancel?: () => void;
@@ -34,22 +35,18 @@ export default function CreateProjectForm({
 }: CreateWorkspaceFormProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const { createProject, isPending } = useCreateProject();
+  const user = useUserStore((state) => state.user);
   const router = useRouter();
 
   const form = useForm<CreateProjectData>({
-    resolver: zodResolver(CreateProjectSchema.omit({ workspaceId: true })),
+    resolver: zodResolver(CreateProjectSchema),
     defaultValues: {
       name: "",
     },
   });
 
-  const onSubmit = (data: CreateProjectData) => {
-    createProject(data, {
-      onSuccess: (data) => {
-        form.reset();
-        router.push(`projects/${data.id}`);
-      },
-    });
+  const onSubmit = (values: CreateProjectData) => {
+    createProject(values);
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {

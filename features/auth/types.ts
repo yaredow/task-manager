@@ -16,7 +16,7 @@ export type AuthResponse = {
   refresh: string;
   user: {
     email: string;
-    pk: string;
+    id: string;
     name: string;
     is_active: boolean;
   };

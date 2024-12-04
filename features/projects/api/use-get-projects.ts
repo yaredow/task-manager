@@ -10,7 +10,9 @@ export const useGetProjects = () => {
     queryKey: ["projects"],
     queryFn: async () => {
       const data = await kyInstance
-        .get(`${backendUrl}/api/v1/projects/`)
+        .get(`${backendUrl}/api/v1/projects/`, {
+          credentials: "include",
+        })
         .json<Project[]>();
 
       return data;
