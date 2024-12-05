@@ -49,8 +49,7 @@ export const columns: ColumnDef<Task>[] = [
 
       return (
         <div className="flex items-center gap-x-2 text-sm font-medium">
-          <ProjectAvatar name={project?.name as string} />
-          <span className="line-clamp-1">{project?.name}</span>
+          <ProjectAvatar name={project?.name as string} size="sm" />
         </div>
       );
     },

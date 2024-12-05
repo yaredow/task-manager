@@ -33,7 +33,6 @@ export default function ProjectSwitcher() {
             <SelectItem key={project.id} value={project.id}>
               <div className="flex justify-start items-center gap-3 font-medium">
                 <ProjectAvatar name={project.name} size="sm" />
-                <p className="text-sm">{project.name}</p>
               </div>
             </SelectItem>
           ))}

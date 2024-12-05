@@ -1,6 +1,13 @@
 "use client";
 
-import { BookCheckIcon, ChevronDown, Home, Plus, Settings } from "lucide-react";
+import {
+  BookCheckIcon,
+  ChevronDown,
+  Home,
+  Minus,
+  Plus,
+  Settings,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,6 +21,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 
 import DottedSeparator from "./dotted-separator";
@@ -22,6 +32,7 @@ import { useGetProjects } from "@/features/projects/api/use-get-projects";
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 import { Collapsible, CollapsibleTrigger } from "./ui/collapsible";
 import { CollapsibleContent } from "@radix-ui/react-collapsible";
+import { NavProjects } from "./nav-projects";
 
 const items = [
   {
@@ -85,29 +96,7 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
         <DottedSeparator />
-        <Collapsible defaultOpen className="group/collapsible">
-          <SidebarGroup>
-            <SidebarGroupLabel asChild>
-              <CollapsibleTrigger>
-                Projects
-                <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-              </CollapsibleTrigger>
-            </SidebarGroupLabel>
-            <CollapsibleContent>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {projects?.map((project) => (
-                    <SidebarMenuItem key={project.id}>
-                      <SidebarMenuButton asChild>
-                        <ProjectAvatar name={project.name} />
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </CollapsibleContent>
-          </SidebarGroup>
-        </Collapsible>
+        <NavProjects />
       </SidebarContent>
     </Sidebar>
   );
