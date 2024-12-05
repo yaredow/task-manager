@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, MoreVertical } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +10,7 @@ import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 import { Task } from "../types";
 import TaskDate from "./task-date";
 import { useGetProject } from "@/features/projects/api/use-get-project";
+import TaskActions from "./task-actions";
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -49,7 +50,11 @@ export const columns: ColumnDef<Task>[] = [
 
       return (
         <div className="flex items-center gap-x-2 text-sm font-medium">
-          <ProjectAvatar name={project?.name as string} size="sm" />
+          <ProjectAvatar
+            name={project?.name as string}
+            projectId={project?.id}
+            size="sm"
+          />
         </div>
       );
     },
@@ -90,6 +95,21 @@ export const columns: ColumnDef<Task>[] = [
       const status = row.original.status;
 
       return <Badge variant={status}>{snakeCaseToTitleCase(status)}</Badge>;
+    },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const id = row.original.id;
+      const projectId = row.original.project;
+
+      return (
+        <TaskActions id={id} projectId={projectId}>
+          <Button variant="ghost" className="size-8 p-0">
+            <MoreVertical className="size-4" />
+          </Button>
+        </TaskActions>
+      );
     },
   },
 ];

@@ -14,7 +14,6 @@ export const useCreateTask = () => {
     Error,
     CreateTaskData
   >({
-    mutationKey: ["task"],
     mutationFn: async (values) => {
       const finalValue = {
         ...values,

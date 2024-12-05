@@ -209,8 +209,7 @@ export default function CreateTaskForm({
                         {projectOptions.map((project) => (
                           <SelectItem value={project.id} key={project.id}>
                             <div className="flex items-center gap-x-2">
-                              <ProjectAvatar name={project.name} />
-                              {project.name}
+                              <ProjectAvatar name={project.name} size="sm" />
                             </div>
                           </SelectItem>
                         ))}

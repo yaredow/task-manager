@@ -23,7 +23,7 @@ export default function Navbar() {
     routes[pathName as keyof typeof routes] || routes["/"];
 
   return (
-    <nav className="lg:pl-[210px] pt-4 flex px-6 items-center justify-between">
+    <nav className="lg:pl-[280px] pt-4 flex px-6 items-center justify-between">
       <div className="flex-col hidden lg:flex">
         <h1 className="text-2xl font-semibold">{title}</h1>
         <p className="text-muted-foreground">{description}</p>

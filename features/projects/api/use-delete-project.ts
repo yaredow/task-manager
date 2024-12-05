@@ -6,17 +6,12 @@ import kyInstance from "@/lib/ky";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
-type UseDeleteProjectProps = {
-  projectId: string;
-};
-
-export const useDeleteProject = ({ projectId }: UseDeleteProjectProps) => {
+export const useDeleteProject = () => {
   const router = useRouter();
   const querClient = useQueryClient();
 
   const { mutate: deleteProject, isPending } = useMutation({
-    mutationKey: ["project"],
-    mutationFn: async () => {
+    mutationFn: async (projectId: string) => {
       const response = await kyInstance.delete(
         `${backendUrl}/api/v1/projects/${projectId}/`,
         {
@@ -31,7 +26,6 @@ export const useDeleteProject = ({ projectId }: UseDeleteProjectProps) => {
         description: "Project deleted successfully",
       });
       querClient.invalidateQueries({ queryKey: ["projects"] });
-      querClient.invalidateQueries({ queryKey: ["project", projectId] });
       router.push("/");
     },
   });

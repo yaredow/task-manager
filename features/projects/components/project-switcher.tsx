@@ -32,7 +32,11 @@ export default function ProjectSwitcher() {
           {projects?.map((project) => (
             <SelectItem key={project.id} value={project.id}>
               <div className="flex justify-start items-center gap-3 font-medium">
-                <ProjectAvatar name={project.name} size="sm" />
+                <ProjectAvatar
+                  name={project.name}
+                  projectId={project.id}
+                  size="sm"
+                />
               </div>
             </SelectItem>
           ))}

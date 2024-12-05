@@ -44,9 +44,8 @@ export default function UpdateProjectForm({
     { projectId },
   );
 
-  const { isPending: isProjectDeletePending, deleteProject } = useDeleteProject(
-    { projectId },
-  );
+  const { isPending: isProjectDeletePending, deleteProject } =
+    useDeleteProject();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -73,7 +72,7 @@ export default function UpdateProjectForm({
     const ok = await confirm();
 
     if (ok) {
-      deleteProject();
+      deleteProject(projectId);
     }
   };
 

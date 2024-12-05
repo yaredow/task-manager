@@ -21,17 +21,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 
 import DottedSeparator from "./dotted-separator";
-import Projects from "./projects";
 import { useGetProjects } from "@/features/projects/api/use-get-projects";
-import { ProjectAvatar } from "@/features/projects/components/project-avatar";
-import { Collapsible, CollapsibleTrigger } from "./ui/collapsible";
-import { CollapsibleContent } from "@radix-ui/react-collapsible";
 import { NavProjects } from "./nav-projects";
 
 const items = [
