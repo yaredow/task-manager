@@ -17,7 +17,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       <div className="w-full">
         <div className="mx-auto max-w-screen-2xl h-full">
           <Navbar />
-          <main className="h-full py-8 px-2 flex flex-col">
+          <main className="h-full py-6 px-6 flex flex-col">
             <SidebarProvider>
               <AppSidebar />
               {children}

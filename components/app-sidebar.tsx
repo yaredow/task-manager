@@ -27,7 +27,7 @@ const items = [
   },
   {
     title: "My Tasks",
-    url: "#",
+    url: "/tasks",
     icon: BookCheckIcon,
   },
 
