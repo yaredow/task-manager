@@ -4,11 +4,9 @@ import { backendUrl } from "@/lib/constants";
 import kyInstance from "@/lib/ky";
 
 import { toast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
 import { Task } from "../types";
 
 export const useDeleteTask = () => {
-  const router = useRouter();
   const querClient = useQueryClient();
 
   const { mutate: deleteTask, isPending } = useMutation({
@@ -27,7 +25,6 @@ export const useDeleteTask = () => {
       });
       querClient.invalidateQueries({ queryKey: ["tasks"] });
       querClient.invalidateQueries({ queryKey: ["tasks", data.id] });
-      router.push("/");
     },
   });
   return { deleteTask, isPending };

@@ -8,6 +8,8 @@ import { ExternalLinkIcon, PencilIcon, TrashIcon } from "lucide-react";
 import { useDeleteTask } from "../api/use-delete-task";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useTaskId } from "../hooks/use-task-id";
+import { useRouter } from "next/navigation";
+import { useProjectId } from "@/features/projects/hooks/use-project-id";
 
 type TaskActionsProps = {
   id: string;
@@ -21,12 +23,21 @@ export default function TaskActions({
   children,
 }: TaskActionsProps) {
   const { deleteTask, isPending } = useDeleteTask();
+  const router = useRouter();
 
   const [ConfirmationDialog, confirm] = useConfirm({
     title: "Delete task",
     message: "Are you sure you want to delete this task?",
     variant: "destructive",
   });
+
+  const onOpenTask = () => {
+    router.push(`/tasks/${id}`);
+  };
+
+  const onOpenProject = () => {
+    router.push(`/projects/${projectId}`);
+  };
 
   const handleDeletetask = async () => {
     const ok = await confirm();
@@ -43,7 +54,7 @@ export default function TaskActions({
         <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-48">
           <DropdownMenuItem
-            onClick={() => {}}
+            onClick={onOpenTask}
             disabled={false}
             className="font-medium p-[10px]"
           >
@@ -59,7 +70,7 @@ export default function TaskActions({
             Edit Task
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => {}}
+            onClick={onOpenProject}
             disabled={false}
             className="font-medium p-[10px]"
           >
