@@ -29,27 +29,27 @@ import {
 } from "@/components/ui/select";
 
 import { UpdateTaskData, UpdateTaskSchema } from "../schemas";
-import { TaskStatus } from "../types";
+import { Task, TaskStatus } from "../types";
 import { useCreateTask } from "../api/use-create-task";
 
 type CreateTaskFormProps = {
   onCancel?: () => void;
-  taskOptions: { id: string; name: string }[];
+  projectOptions: { id: string; name: string }[];
+  task: Task;
 };
 
 export default function UpdateTaskForm({
   onCancel,
-  taskOptions,
+  task,
+  projectOptions,
 }: CreateTaskFormProps) {
-  const { isPending, createTask } = useCreateTask();
+  const { createTask, isPending } = useCreateTask();
+
   const form = useForm<UpdateTaskData>({
     resolver: zodResolver(UpdateTaskSchema),
     defaultValues: {
-      name: "",
-      status: TaskStatus.TODO,
-      description: "",
-      due_date: undefined,
-      priority: 0,
+      ...task,
+      due_date: task.due_date ? new Date(task.due_date) : undefined,
     },
   });
 

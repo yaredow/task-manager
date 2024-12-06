@@ -1,20 +1,17 @@
 "use client";
 
-import { parseAsBoolean, useQueryState } from "nuqs";
+import { parseAsString, useQueryState } from "nuqs";
 
 export const useUpdateTaskModal = () => {
-  const [isOpen, setIsOpen] = useQueryState(
-    "edit-task",
-    parseAsBoolean.withDefault(false).withOptions({ clearOnDefault: true }),
-  );
+  const [taskId, setTaskId] = useQueryState("edit-task", parseAsString);
 
-  const open = () => setIsOpen(true);
-  const close = () => setIsOpen(false);
+  const open = (id: string) => setTaskId(id);
+  const close = () => setTaskId(null);
 
   return {
     open,
     close,
-    isOpen,
-    setIsOpen,
+    taskId,
+    setTaskId,
   };
 };

@@ -7,9 +7,8 @@ import {
 import { ExternalLinkIcon, PencilIcon, TrashIcon } from "lucide-react";
 import { useDeleteTask } from "../api/use-delete-task";
 import { useConfirm } from "@/hooks/use-confirm";
-import { useTaskId } from "../hooks/use-task-id";
 import { useRouter } from "next/navigation";
-import { useProjectId } from "@/features/projects/hooks/use-project-id";
+import { useUpdateTaskModal } from "../hooks/use-update-task-modal";
 
 type TaskActionsProps = {
   id: string;
@@ -24,6 +23,7 @@ export default function TaskActions({
 }: TaskActionsProps) {
   const { deleteTask, isPending } = useDeleteTask();
   const router = useRouter();
+  const { open } = useUpdateTaskModal();
 
   const [ConfirmationDialog, confirm] = useConfirm({
     title: "Delete task",
@@ -62,7 +62,7 @@ export default function TaskActions({
             Task Detials
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => {}}
+            onClick={open}
             disabled={false}
             className="font-medium p-[10px]"
           >

@@ -1,16 +1,18 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreVertical } from "lucide-react";
+import { ColumnDef } from "@tanstack/react-table";
 
+import { snakeCaseToTitleCase } from "@/lib/utils";
+
+import { ProjectAvatar } from "@/features/projects/components/project-avatar";
+import { useGetProject } from "@/features/projects/api/use-get-project";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { snakeCaseToTitleCase } from "@/lib/utils";
-import { ProjectAvatar } from "@/features/projects/components/project-avatar";
-import { Task } from "../types";
-import TaskDate from "./task-date";
-import { useGetProject } from "@/features/projects/api/use-get-project";
+
 import TaskActions from "./task-actions";
+import TaskDate from "./task-date";
+import { Task } from "../types";
 
 export const columns: ColumnDef<Task>[] = [
   {

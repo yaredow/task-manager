@@ -109,15 +109,6 @@ export default function SignInForm() {
           >
             <FcGoogle size={16} /> Login with Google
           </Button>
-
-          <Button
-            className="w-full flex flex-row gap-2"
-            disabled={false}
-            variant="secondary"
-          >
-            <FaGithub size={16} />
-            Login with Google
-          </Button>
         </CardContent>
         <div className="px-7">
           <DottedSeparator />

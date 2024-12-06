@@ -32,16 +32,16 @@ export const UpdateTaskSchema = z.object({
     .string()
     .min(1, "Task name is required")
     .max(100, "Task name is too long")
-    .optional(), // Optional name
-  status: TaskStatusSchema.optional(), // Status is optional for updates
-  project: z.string().cuid().optional(), // Project ID is optional
-  description: z.string().min(1, "Description is required").optional(), // Optional description
-  due_date: z.coerce.date().optional(), // Optional due date
+    .optional(),
+  status: TaskStatusSchema.optional(),
+  project: z.string().cuid().optional(),
+  description: z.string().min(1, "Description is required").optional(),
+  due_date: z.coerce.date().optional(),
   priority: z
     .number()
     .min(0, "Priority must be at least 0")
     .max(10, "Priority must be at most 10")
-    .optional(), // Optional priority
+    .optional(),
 });
 
 export type UpdateTaskData = z.infer<typeof UpdateTaskSchema>;

@@ -3,6 +3,7 @@ import Navbar from "@/components/nav-bar";
 import { Sidebar, SidebarProvider } from "@/components/ui/sidebar";
 import CreateProjectModal from "@/features/projects/components/create-project-modal";
 import { CreateTaskModal } from "@/features/tasks/components/create-task-modal";
+import { UpdateTaskModal } from "@/features/tasks/components/update-task-modal";
 import { ReactNode } from "react";
 
 type DashboardLayoutProps = {
@@ -14,6 +15,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     <div className="flex w-full h-full">
       <CreateProjectModal />
       <CreateTaskModal />
+      <UpdateTaskModal />
       <div className="w-full">
         <div className="mx-auto max-w-screen-2xl h-full">
           <Navbar />
