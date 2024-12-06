@@ -9,7 +9,7 @@ export const UpdateTaskModal = () => {
 
   return (
     <ResponsiveModal open={!!taskId} onOpenChange={close}>
-      {taskId && <UpdateTaskFormWrapper onCancel={close} />}
+      {taskId && <UpdateTaskFormWrapper taskId={taskId} onCancel={close} />}
     </ResponsiveModal>
   );
 };

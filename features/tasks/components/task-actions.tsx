@@ -62,7 +62,7 @@ export default function TaskActions({
             Task Detials
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={open}
+            onClick={() => open(id)}
             disabled={false}
             className="font-medium p-[10px]"
           >

@@ -33,7 +33,7 @@ export const UpdateTaskSchema = z.object({
     .min(1, "Task name is required")
     .max(100, "Task name is too long")
     .optional(),
-  status: TaskStatusSchema.optional(),
+  status: TaskStatusSchema.default(TaskStatus.TODO),
   project: z.string().cuid().optional(),
   description: z.string().min(1, "Description is required").optional(),
   due_date: z.coerce.date().optional(),

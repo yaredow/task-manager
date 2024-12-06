@@ -30,7 +30,7 @@ import {
 
 import { UpdateTaskData, UpdateTaskSchema } from "../schemas";
 import { Task, TaskStatus } from "../types";
-import { useCreateTask } from "../api/use-create-task";
+import { useUpdateTask } from "../api/use-update-task";
 
 type CreateTaskFormProps = {
   onCancel?: () => void;
@@ -43,7 +43,7 @@ export default function UpdateTaskForm({
   task,
   projectOptions,
 }: CreateTaskFormProps) {
-  const { createTask, isPending } = useCreateTask();
+  const { editTask, isPending } = useUpdateTask({ taskId: task.id });
 
   const form = useForm<UpdateTaskData>({
     resolver: zodResolver(UpdateTaskSchema),
@@ -54,7 +54,7 @@ export default function UpdateTaskForm({
   });
 
   const onSubmit = (values: UpdateTaskData) => {
-    createTask(values, {
+    editTask(values, {
       onSuccess: () => {
         onCancel && onCancel();
       },
@@ -235,7 +235,7 @@ export default function UpdateTaskForm({
                 </Button>
 
                 <Button type="submit" disabled={isPending}>
-                  Create Task
+                  Save Task
                 </Button>
               </div>
             </div>
