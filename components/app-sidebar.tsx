@@ -47,8 +47,6 @@ const items = [
 ];
 
 export function AppSidebar() {
-  const { projects, isPending } = useGetProjects();
-
   return (
     <Sidebar>
       <SidebarHeader>
